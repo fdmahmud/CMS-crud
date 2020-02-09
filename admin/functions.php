@@ -262,6 +262,66 @@ function insertCategories() {
 			}
 		}
 
+
+
+function showAllusers() {
+		global $connection;
+
+		$query = "SELECT * FROM users ";
+        //$query .= "ORDER BY comment_id DESC ";
+
+			$show_All_Users = mysqli_query($connection, $query);
+
+			confirm($show_All_Users);
+
+			while ($row = mysqli_fetch_assoc($show_All_Users)) {
+
+				$user_id = $row['user_id'];
+				$username = $row['username'];
+				$password = $row['password'];
+				//$comment_title = $row['post_title']; No comment title
+				$firstname = $row['user_firstname'];
+				$lastname = $row['user_lastname'];
+				$email = $row['user_email'];
+				$userimage = $row['user_image'];
+				$userroll = $row['user_roll'];
+
+				echo "<tr>";
+				echo "<td>{$user_id}</td>";
+				echo "<td>{$username}</td>";
+				echo "<td>{$firstname}</td>";
+
+
+				echo "<td>{$lastname}</td>";
+				echo "<td>{$email}</td>";
+				echo "<td><img width='90' src='../images/{$userimage}'></td>";
+				echo "<td>{$userroll}</td>";
+				// echo "<td><a class='btn btn-primary' href='comments.php?approve={$comment_id}'>Aporove</a></td>";
+				// echo "<td><a class='btn btn-primary' href='comments.php?unapprove={$comment_id}'>Unapprove</a></td>";
+				echo "<td><a class='btn btn-danger' href='users.php?delete={$user_id}'>Delete</a></td>";
+				echo "</tr>";
+			}
+		}
+
+	function deleteUser() {
+
+			global $connection;
+
+			if (isset($_GET['delete'])) {
+	 
+	        	$the_delete_id = $_GET['delete'];            	
+	            $query = "DELETE FROM users WHERE user_id = {$the_delete_id} ";
+	            $delete_user_query = mysqli_query($connection, $query);
+	            header("Location: users.php");
+
+	            // $query = "UPDATE posts SET post_comment_count = post_comment_count - 1 ";
+             //    $query .= "WHERE post_id = '{$the_post_id}' ";
+
+	            // $delete_comment_count = mysqli_query($connection, $query);
+
+			}
+		}
+		
 	// function editPost() {
 	// 	global $connection;
 

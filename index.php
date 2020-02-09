@@ -15,7 +15,8 @@
             <div class="col-md-8">
 
                 <?php 
-                    $query = "SELECT * FROM posts";
+                    $query = "SELECT * FROM posts ";
+                    //$query .= "WHERE post_status = 'published' ";
 
                     $select_all_posts_query = mysqli_query($connection, $query);
 
@@ -27,6 +28,12 @@
                             $post_date = $row['post_date'];
                             $post_image = $row['post_image'];
                             $post_content = substr($row['post_content'],0,100);
+                            $post_status = $row['post_status'];
+
+                            if ($post_status =='published') {
+                               
+
+                           
 
                 ?>
 
@@ -51,8 +58,11 @@
 
                 <hr>       
 
-                    <?php     
-                        }
+                    <?php  
+                    } else {
+                        echo "<h1 class='text-center'>No post found</h1>";   
+                        } 
+                    }
                     ?>
 
 
