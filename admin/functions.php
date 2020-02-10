@@ -284,7 +284,7 @@ function showAllusers() {
 				$lastname = $row['user_lastname'];
 				$email = $row['user_email'];
 				$userimage = $row['user_image'];
-				$userroll = $row['user_roll'];
+				$user_role = $row['user_role'];
 
 				echo "<tr>";
 				echo "<td>{$user_id}</td>";
@@ -295,9 +295,10 @@ function showAllusers() {
 				echo "<td>{$lastname}</td>";
 				echo "<td>{$email}</td>";
 				echo "<td><img width='90' src='../images/{$userimage}'></td>";
-				echo "<td>{$userroll}</td>";
-				// echo "<td><a class='btn btn-primary' href='comments.php?approve={$comment_id}'>Aporove</a></td>";
-				// echo "<td><a class='btn btn-primary' href='comments.php?unapprove={$comment_id}'>Unapprove</a></td>";
+				echo "<td>{$user_role}</td>";
+				echo "<td><a class='btn btn-primary' href='users.php?source=edit_user&u_id={$user_id}''>Edit User</a></td>";
+				echo "<td><a class='btn btn-primary' href='users.php?change_to_admin={$user_id}'>Admin</a></td>";
+				echo "<td><a class='btn btn-primary' href='users.php?change_to_sub={$user_id}'>Subscriber</a></td>";
 				echo "<td><a class='btn btn-danger' href='users.php?delete={$user_id}'>Delete</a></td>";
 				echo "</tr>";
 			}
@@ -313,16 +314,83 @@ function showAllusers() {
 	            $query = "DELETE FROM users WHERE user_id = {$the_delete_id} ";
 	            $delete_user_query = mysqli_query($connection, $query);
 	            header("Location: users.php");
-
-	            // $query = "UPDATE posts SET post_comment_count = post_comment_count - 1 ";
-             //    $query .= "WHERE post_id = '{$the_post_id}' ";
-
-	            // $delete_comment_count = mysqli_query($connection, $query);
-
 			}
 		}
 		
-	// function editPost() {
+	function changeToAdmin() {
+
+		global $connection;
+
+		if (isset($_GET['change_to_admin'])) {
+ 
+        	$the_user_id = $_GET['change_to_admin'];            	
+            $query = "UPDATE users SET user_role = 'admin' WHERE user_id = '{$the_user_id}' ";
+            $update_user_query = mysqli_query($connection, $query);
+            header("Location: users.php");
+		}
+	}
+
+	function changeToSubscriber() {
+
+		global $connection;
+
+		if (isset($_GET['change_to_sub'])) {
+ 
+        	$the_user_id = $_GET['change_to_sub'];            	
+            $query = "UPDATE users SET user_role = 'subscriber' WHERE user_id = '{$the_user_id}' ";
+            $update_user_query = mysqli_query($connection, $query);
+            header("Location: users.php");
+		}
+	}
+
+function logIn() {
+
+	global $connection;
+	
+	if (isset($_POST['login'])) {
+		$username = $_POST['username'];
+		$password = $_POST['password'];
+
+		$username = mysqli_real_escape_string($connection, $username);
+		$password = mysqli_real_escape_string($connection, $password);
+
+		$query = "SELECT * FROM users WHERE username = '{$username}' ";
+		$select_user_query = mysqli_query($connection, $query);
+
+		confirm($select_user_query);
+		while ($row = mysqli_fetch_assoc($select_user_query)) {
+			$db_user_firstname = $row['user_firstname'];
+			$db_user_lastname = $row['user_lastname'];
+			$db_user_role = $row['user_role'];
+			$db_user_email = $row['user_email'];
+			$db_username = $row['username'];
+			$db_user_password = $row['password'];
+			$db_user_id = $row['user_id'];
+		
+		}
+
+		if ($username !== $db_username && $password !== $db_user_password) {
+			header("Location: ../index.php");
+		} else if ($username == $db_username && $password == $db_user_password) {
+
+			$_SESSION['username'] = $db_username;
+			//$_SESSION['password'] = $db_user_password;
+			$_SESSION['firstname'] = $db_user_firstname;
+			$_SESSION['lastname'] = $db_user_lastname;
+			$_SESSION['user_role'] = $db_user_role;
+
+
+			header("Location: ../admin");
+			
+		} else {
+			header("Location: ../index.php");
+
+		}
+
+	}
+}
+
+// function editPost() {
 	// 	global $connection;
 
 

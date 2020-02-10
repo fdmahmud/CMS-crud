@@ -10,9 +10,9 @@
                     			<th>Lastname</th>
                     			<th>Email</th>
                     			<th>User Image</th>
-                    			<th>Role</th>
-                                   <th>Extra</th>
-                                   <th>Delete</th>
+                    			<th colspan="5">Role</th>
+                                   <!-- <th>Extra</th>
+                                   <th>Delete</th> -->
                     			 
                     		</tr>
                     	</thead>
@@ -29,6 +29,8 @@
 	                    			<td>Comments</td> -->
 
                <?php deleteUser(); ?>
+               <?php changeToAdmin(); ?>
+               <?php changeToSubscriber(); ?>
 
 
                     		</tr>

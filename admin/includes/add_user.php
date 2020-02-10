@@ -9,14 +9,14 @@
 				$user_image = $_FILES['image']['name'];
 				$user_image_temp = $_FILES['image']['tmp_name'];
 				$user_password = $_POST['password'];
-				$user_roll = $_POST['user_roll'];
+				$user_role = $_POST['user_role'];
 				
 
 				move_uploaded_file($user_image_temp, "../images/$user_image");
 
 	$query = "INSERT INTO users";
-	$query .= "(username, password, user_firstname, user_lastname, user_email, user_image, user_roll) " ;
-	$query .= "VALUES('{$username}','{$user_password}','{$user_firstname}','{$user_lastname}','{$user_email}','{$user_image}','{$user_roll}') ";
+	$query .= "(username, password, user_firstname, user_lastname, user_email, user_image, user_role) " ;
+	$query .= "VALUES('{$username}','{$user_password}','{$user_firstname}','{$user_lastname}','{$user_email}','{$user_image}','{$user_role}') ";
 				$create_user_query = mysqli_query($connection, $query);
 
 				confirm($create_user_query);
@@ -39,7 +39,7 @@
 
 
 	<div class="form-group">
-		<select name="user_roll" id="">
+		<select name="user_role" id="">
 			<option value="subscriber">Select Option</option>
 
 			<option value="admin">admin</option>

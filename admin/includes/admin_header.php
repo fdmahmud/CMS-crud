@@ -1,7 +1,8 @@
 <?php ob_start(); ?> <!--  Output Buffering.. always on the top -->
-
+<?php session_start();?>
 <?php include '../includes/db.php'; ?>
 <?php include 'functions.php'; ?>
+
 
 
 
