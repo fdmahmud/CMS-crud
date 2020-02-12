@@ -3,7 +3,18 @@
 <?php include '../includes/db.php'; ?>
 <?php include 'functions.php'; ?>
 
+<?php  
+        /// Admin only login system logic.//
 
+    if (!isset($_SESSION['user_role'])) {
+        
+            header("Location: ../index.php");
+        
+    } else if ($_SESSION['user_role'] == 'subscriber') {
+            header("Location: ../index.php");
+        }
+
+?>
 
 
 <!DOCTYPE html>

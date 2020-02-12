@@ -81,6 +81,14 @@ function insertCategories() {
 				die("error" . mysqli_error($connection));
 			}
 
+$query = "SELECT * FROM posts ";
+$all_query = mysqli_query($connection, $query);
+
+$post_counts = mysqli_num_rows($all_query);
+
+$post_counts = ($post_counts-$post_counts)+1;
+
+
 			while ($row = mysqli_fetch_assoc($show_All_Posts)) {
 
 				$post_id = $row['post_id'];
@@ -94,6 +102,8 @@ function insertCategories() {
 				$post_date = $row['post_date'];
 
 				echo "<tr>";
+				echo "<td>{$post_counts}</td>";
+				$post_counts++;
 				echo "<td>{$post_id}</td>";
 				echo "<td>{$post_author}</td>";
 				echo "<td>{$post_title}</td>";
@@ -156,6 +166,15 @@ function insertCategories() {
 
 			confirm($show_All_Comments);
 
+
+$query = "SELECT * FROM comments ";
+$all_query = mysqli_query($connection, $query);
+
+$post_counts = mysqli_num_rows($all_query);
+
+$post_counts = ($post_counts-$post_counts)+1;
+
+
 			while ($row = mysqli_fetch_assoc($show_All_Comments)) {
 
 				$comment_id = $row['comment_id'];
@@ -168,7 +187,16 @@ function insertCategories() {
 				$comment_date = $row['comment_date'];
 
 				echo "<tr>";
+
+					
+
+				echo "<td>{$post_counts}</td>";
+				$post_counts++;
+
 				echo "<td>{$comment_id}</td>";
+
+
+
 				echo "<td>{$comment_author}</td>";
 				echo "<td>{$comment_content}</td>";
 
@@ -274,6 +302,15 @@ function showAllusers() {
 
 			confirm($show_All_Users);
 
+
+$query = "SELECT * FROM users ";
+$all_query = mysqli_query($connection, $query);
+
+$post_counts = mysqli_num_rows($all_query);
+
+$post_counts = ($post_counts-$post_counts)+1;
+
+
 			while ($row = mysqli_fetch_assoc($show_All_Users)) {
 
 				$user_id = $row['user_id'];
@@ -287,10 +324,11 @@ function showAllusers() {
 				$user_role = $row['user_role'];
 
 				echo "<tr>";
+				echo "<td>{$post_counts}</td>";
+				$post_counts++;
 				echo "<td>{$user_id}</td>";
 				echo "<td>{$username}</td>";
 				echo "<td>{$firstname}</td>";
-
 
 				echo "<td>{$lastname}</td>";
 				echo "<td>{$email}</td>";
@@ -303,6 +341,54 @@ function showAllusers() {
 				echo "</tr>";
 			}
 		}
+
+	function editUser() {
+		global $connection;
+
+		if (isset($_GET['u_id'])) {
+			$the_user_id = $_GET['u_id'];
+		}
+		if (isset($_POST['edit_user'])) {
+	
+				$user_firstname = $_POST['user_firstname'];
+				$user_lastname = $_POST['user_lastname'];
+				$username = $_POST['username'];
+				$user_email = $_POST['user_email'];
+				$user_image = $_FILES['image']['name'];
+				$user_image_temp = $_FILES['image']['tmp_name'];
+				$user_password = $_POST['password'];
+				$user_role = $_POST['user_role'];
+				
+
+				move_uploaded_file($user_image_temp, "../images/$user_image");
+
+			if (empty($user_image)) {
+				$query = "SELECT * FROM users WHERE user_id = {$the_user_id} ";
+				$select_image = mysqli_query($connection, $query);
+
+				while ($row = mysqli_fetch_array($select_image)) {
+					$user_image1 = $row['user_image'];
+				}
+
+			}
+
+			$query = "UPDATE users SET ";                          	//  ORGANIZE
+			$query .= "username = '{$username}', ";					// 	THIS QUERY
+			$query .= "password = '{$user_password}', ";			//	WIth VERY
+			$query .= "user_firstname = '{$user_firstname}', ";		//	MUTCH
+			$query .= "user_lastname = '{$user_lastname}', ";		//	CAUTION!!!!!
+			$query .= "user_email = '{$user_email}', ";				//
+			$query .= "user_image = '{$user_image1}', ";			//	OR GET
+			$query .= "user_role = '{$user_role}' " ;				//	READY TO
+			$query .= "WHERE user_id = {$the_user_id}";				//	SUFFER!!!
+
+
+				$create_user_query = mysqli_query($connection, $query);
+
+				confirm($create_user_query);
+				header("Location: users.php");
+	}
+	}
 
 	function deleteUser() {
 
@@ -366,33 +452,80 @@ function logIn() {
 			$db_username = $row['username'];
 			$db_user_password = $row['password'];
 			$db_user_id = $row['user_id'];
+			$db_user_image = $row['user_image'];
 		
 		}
 
-		if ($username !== $db_username && $password !== $db_user_password) {
-			header("Location: ../index.php");
-		} else if ($username == $db_username && $password == $db_user_password) {
+		if ($username === $db_username && $password === $db_user_password) { // is identical
 
 			$_SESSION['username'] = $db_username;
 			//$_SESSION['password'] = $db_user_password;
 			$_SESSION['firstname'] = $db_user_firstname;
 			$_SESSION['lastname'] = $db_user_lastname;
 			$_SESSION['user_role'] = $db_user_role;
-
+			$_SESSION['user_role'] = $db_user_role;
+			$_SESSION['user_image'] = $db_user_image;
 
 			header("Location: ../admin");
-			
-		} else {
+			}
+
+		else {
 			header("Location: ../index.php");
 
-		}
+			}
 
+		
 	}
+}
+
+function viewAllPosts() {
+	global $connection;
+	//global $db_table;
+
+	$query = "SELECT * FROM posts ";
+	$all_query = mysqli_query($connection, $query);
+
+	echo $post_counts = mysqli_num_rows($all_query);
+
+}
+
+function viewAllUsers() {
+	global $connection;
+	//global $db_table;
+
+	$query = "SELECT * FROM users ";
+	$all_query = mysqli_query($connection, $query);
+
+	echo $post_counts = mysqli_num_rows($all_query);
+
+}
+
+
+function viewAllComments() {
+	global $connection;
+	//global $db_table;
+
+	$query = "SELECT * FROM comments ";
+	$all_query = mysqli_query($connection, $query);
+
+	echo $post_counts = mysqli_num_rows($all_query);
+
+}
+
+function viewAllCategories() {
+	global $connection;
+	//global $db_table;
+
+	$query = "SELECT * FROM catagories ";
+	$all_query = mysqli_query($connection, $query);
+
+	echo $post_counts = mysqli_num_rows($all_query);
+
 }
 
 // function editPost() {
 	// 	global $connection;
-
+//function editPost() {}
 
 
 	// }

@@ -4,6 +4,7 @@
 <table class="table table-bordered table-hover">
                     	<thead>
                     		<tr>
+                                   <th>Sl No</th>
                     			<th>Id</th>
                     			<th>Author</th>
                     			<th>Comment</th>

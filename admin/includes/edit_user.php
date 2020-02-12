@@ -27,46 +27,7 @@
 	}
 
 
-	if (isset($_POST['edit_user'])) {
-	
-				$user_firstname = $_POST['user_firstname'];
-				$user_lastname = $_POST['user_lastname'];
-				$username = $_POST['username'];
-				$user_email = $_POST['user_email'];
-				$user_image = $_FILES['image']['name'];
-				$user_image_temp = $_FILES['image']['tmp_name'];
-				$user_password = $_POST['password'];
-				$user_role = $_POST['user_role'];
-				
-
-				move_uploaded_file($user_image_temp, "../images/$user_image");
-
-			if (empty($user_image)) {
-				$query = "SELECT * FROM users WHERE user_id = {$the_user_id} ";
-				$select_image = mysqli_query($connection, $query);
-
-				while ($row = mysqli_fetch_array($select_image)) {
-					$user_image1 = $row['user_image'];
-				}
-
-			}
-
-	$query = "UPDATE users SET ";                          	//  ORGANIZE
-	$query .= "username = '{$username}', ";					// 	THIS QUERY
-	$query .= "password = '{$user_password}', ";			//	WIth VERY
-	$query .= "user_firstname = '{$user_firstname}', ";		//	MUTCH
-	$query .= "user_lastname = '{$user_lastname}', ";		//	CAUTION!!!!!
-	$query .= "user_email = '{$user_email}', ";				//
-	$query .= "user_image = '{$user_image1}', ";			//	OR GET
-	$query .= "user_role = '{$user_role}' " ;				//	READY TO
-	$query .= "WHERE user_id = {$the_user_id}";				//	SUFFER!!!
-
-
-				$create_user_query = mysqli_query($connection, $query);
-
-				confirm($create_user_query);
-				header("Location: users.php");
-	}
+	editUser();
 
 
 ?>
@@ -86,7 +47,7 @@
 
 	<div class="form-group">
 		<select name="user_role" id="">
-			<option value="subscriber"><?php echo $user_role; ?></option>
+			<option value="<?php echo $user_role; ?>"><?php echo $user_role; ?></option>
 
 
 			<?php 

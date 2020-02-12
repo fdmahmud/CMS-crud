@@ -16,7 +16,7 @@
                     <div class="col-lg-12">
                         <h1 class="page-header">
                             Welcome to admin
-                            <small>Ferdous </small>
+                            <small><?php echo $_SESSION['firstname'] . " " . $_SESSION['lastname']; ?>  </small>
                         </h1>
                         <div class="col-xs-6">
 
