@@ -46,6 +46,10 @@
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
+    <script  src="../admin/js/scripts.js"></script>
+
+    <script src="../admin/js/ckeditor.js"></script>
+ 
 </head>
 
 <body>

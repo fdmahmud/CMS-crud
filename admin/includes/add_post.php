@@ -21,6 +21,8 @@
 				$create_post_query = mysqli_query($connection, $query);
 
 				confirm($create_post_query);
+				echo "Post Created: " . " " . "<a class='btn btn-primary' href='posts.php'>View Users</a>";
+
 	}
 
 
@@ -64,7 +66,12 @@
 	</div>
 	<div class="form-group">
 		<label for="title">Post Status</label>
-		<input type="text" class="form-control" name="post_status">
+		<select name="post_status">
+			<option value="draft">Draft</option>
+			<option value="published">Published</option>
+		</select>
+
+		<!-- <input type="text" class="form-control" name="post_status"> -->
 	</div>
 	<div class="form-group">
 		<label for="title">Post Image</label>
@@ -76,7 +83,7 @@
 	</div>
 	<div class="form-group">
 		<label for="title">Post Content</label>
-		<textarea type="text" class="form-control" id="" cols="30" rows="10" name="post_content"></textarea>
+		<textarea type="text" class="form-control" id="body" cols="30" rows="10" name="post_content"></textarea>
 	</div>
 	<div class="form-group">
 		

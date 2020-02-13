@@ -103,9 +103,28 @@
 		<input type="text" class="form-control" name="post_author" value="<?php echo $post_author; ?>">
 	</div>
 	<div class="form-group">
+		<select name="post_status" id="">
+			<option value="<?php echo $post_status; ?>"><?php echo ucfirst($post_status); ?></option>
+	<?php
+
+		if ($post_status == 'draft') {
+			echo "<option value='published'>Published</option>";
+		} else {
+			echo "<option value='draft'>Draft</option>";
+		}
+
+	 ?>
+
+
+		</select>
+	</div>
+	<!-- <div class="form-group">
 		<label for="title">Post Status</label>
 		<input type="text" class="form-control" name="post_status" value="<?php echo $post_status; ?>">
-	</div>
+	</div> -->
+
+
+
 	<div class="form-group">
 		<label for="title">Post Image</label>
 		<div class="form-group">
@@ -119,7 +138,7 @@
 	</div>
 	<div class="form-group">
 		<label for="title">Post Content</label>
-		<textarea type="text" class="form-control" id="" cols="30" rows="10" name="post_content"><?php echo $post_content; ?></textarea>
+		<textarea type="text" class="form-control" id="header" cols="30" rows="10" name="post_content"><?php echo $post_content; ?></textarea>
 	</div>
 	<div class="form-group">
 		
