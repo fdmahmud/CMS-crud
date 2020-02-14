@@ -21,7 +21,10 @@
 				$create_post_query = mysqli_query($connection, $query);
 
 				confirm($create_post_query);
-				echo "Post Created: " . " " . "<a class='btn btn-primary' href='posts.php'>View Users</a>";
+
+				$the_post_id = mysqli_insert_id($connection); //Pulls out the last created id.
+
+				echo "<p class='big-success'>Post Created:</p>" . " " . "<a class='btn btn-primary' href='../post.php?p_id=$the_post_id'>View Post</a>" . " " . "<a class='btn btn-primary' href='posts.php'>View All Post</a>";
 
 	}
 
@@ -64,6 +67,11 @@
 		<label for="title">Post Author</label>
 		<input type="text" class="form-control" name="post_author">
 	</div>
+
+
+
+
+
 	<div class="form-group">
 		<label for="title">Post Status</label>
 		<select name="post_status">
@@ -73,6 +81,10 @@
 
 		<!-- <input type="text" class="form-control" name="post_status"> -->
 	</div>
+
+
+
+	
 	<div class="form-group">
 		<label for="title">Post Image</label>
 		<input type="file" name="image">

@@ -1,5 +1,7 @@
 <?php ob_start(); ?>
 <?php include "admin/functions.php" ; ?>
+<?php session_start();?>
+
 
 
 <!DOCTYPE html>

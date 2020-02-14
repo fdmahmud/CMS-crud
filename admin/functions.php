@@ -102,6 +102,7 @@ $post_counts = ($post_counts-$post_counts)+1;
 				$post_date = $row['post_date'];
 
 				echo "<tr>";
+				echo "<td><input class='checkBoxes' type='checkbox' name='checkBoxArray[]' value='{$post_id}'></td>";
 				echo "<td>{$post_counts}</td>";
 				$post_counts++;
 				echo "<td>{$post_id}</td>";
@@ -522,6 +523,12 @@ function viewAllCategories() {
 	echo $post_counts = mysqli_num_rows($all_query);
 
 }
+
+// function imageName($imageName) {
+// 	$imageName = 1;
+// 	$imageName++;
+// }
+
 
 // function editPost() {
 	// 	global $connection;
