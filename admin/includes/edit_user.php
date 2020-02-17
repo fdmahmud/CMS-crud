@@ -30,6 +30,17 @@
 	editUser();
 
 
+					// $query = "SELECT randSalt FROM users ";                       //Incription  password
+		   //          $select_randSalt_query = mysqli_query($connection, $query);
+
+		   //          confirm($select_randSalt_query);
+
+		   //          $row = mysqli_fetch_assoc($select_randSalt_query); 
+		   //          $randSalt = $row['randSalt'];
+
+		   //          $hashed_password = crypt($user_password, $randSalt);
+
+
 ?>
 
 
@@ -81,7 +92,7 @@
 	<div class="form-group">
 		<label for="title">Passowrd</label>
 		<input type="password" class="form-control" value="<?php echo $password; ?>" name="password">
-	</div>
+	</div> 
 	<div class="form-group">
 		<label for="title">Profile Image</label>
 		<img width="90" src="../images/<?php echo $image; ?>">

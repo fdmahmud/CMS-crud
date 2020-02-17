@@ -107,7 +107,7 @@ $post_counts = ($post_counts-$post_counts)+1;
 				$post_counts++;
 				echo "<td>{$post_id}</td>";
 				echo "<td>{$post_author}</td>";
-				echo "<td>{$post_title}</td>";
+				echo "<td><a href='../post.php?p_id={$post_id}'>{$post_title}</a></td>";
 
 					$query = "SELECT * FROM catagories WHERE cat_id = {$post_category_id} "; 
 	            		$select_catagories_id = mysqli_query($connection, $query);
@@ -373,9 +373,19 @@ $post_counts = ($post_counts-$post_counts)+1;
 
 			}
 
+						$query = "SELECT randSalt FROM users ";                       //Incription  password
+			            $select_randSalt_query = mysqli_query($connection, $query);
+
+			            confirm($select_randSalt_query);
+
+			            $row = mysqli_fetch_assoc($select_randSalt_query); 
+			            $randSalt = $row['randSalt'];
+
+			            $hashed_password = crypt($user_password, $randSalt);
+
 			$query = "UPDATE users SET ";                          	//  ORGANIZE
 			$query .= "username = '{$username}', ";					// 	THIS QUERY
-			$query .= "password = '{$user_password}', ";			//	WIth VERY
+			$query .= "password = '{$hashed_password}', ";			//	WIth VERY
 			$query .= "user_firstname = '{$user_firstname}', ";		//	MUTCH
 			$query .= "user_lastname = '{$user_lastname}', ";		//	CAUTION!!!!!
 			$query .= "user_email = '{$user_email}', ";				//
@@ -454,8 +464,10 @@ function logIn() {
 			$db_user_password = $row['password'];
 			$db_user_id = $row['user_id'];
 			$db_user_image = $row['user_image'];
-		
+			$randSalt = $row['randSalt'];
+
 		}
+		$password = crypt($password, $db_user_password);
 
 		if ($username === $db_username && $password === $db_user_password) { // is identical
 
@@ -521,6 +533,25 @@ function viewAllCategories() {
 	$all_query = mysqli_query($connection, $query);
 
 	echo $post_counts = mysqli_num_rows($all_query);
+
+}
+
+
+function checkUserExist($username) {
+	global $connection;
+	$message = "";
+	$query = "SELECT user_id FROM users WHERE username = '{$username}' ";
+
+	$check_user = mysqli_qsuery($connection, $query);
+	confirm($check_user);
+
+	$row = mysqli_fetch_assoc($check_user);
+	if (!empty($row)) {
+		
+		return $m = "1";
+	} else {
+		return $m = "2";
+	}
 
 }
 

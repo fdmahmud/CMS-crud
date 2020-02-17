@@ -79,20 +79,28 @@
                     $comment_author_name = $_POST['comment_author'];
                     $comment_content = $_POST['comment_content'];
 
-                    $query = "INSERT INTO comments ";
-                    $query .= "(comment_post_id, comment_author, comment_email, comment_content, comment_status, comment_date) ";
-                    $query .= "VALUES('{$the_post_id}', '{$comment_author_name}', '{$comment_author_email}', '{$comment_content}', 'unapproved', now()) ";
+                    if (!empty($comment_author_email) &&  !empty($comment_author_name) && !empty($comment_content)) {
 
-                    $submitting_comment = mysqli_query($connection, $query);
+                        $query = "INSERT INTO comments ";
+                        $query .= "(comment_post_id, comment_author, comment_email, comment_content, comment_status, comment_date) ";
+                        $query .= "VALUES('{$the_post_id}', '{$comment_author_name}', '{$comment_author_email}', '{$comment_content}', 'unapproved', now()) ";
 
-                    confirm($submitting_comment); // my method.
-                    echo "Comment Submitted.";
+                        $submitting_comment = mysqli_query($connection, $query);
+
+                        confirm($submitting_comment); // my method.
+                        echo "Comment Submitted.";
 
 
-                    $query = "UPDATE posts SET post_comment_count = post_comment_count + 1 ";
-                    $query .= "WHERE post_id = '{$the_post_id}'";
+                        $query = "UPDATE posts SET post_comment_count = post_comment_count + 1 ";
+                        $query .= "WHERE post_id = '{$the_post_id}'";
 
-                    $update_comment_count = mysqli_query($connection, $query);
+                        $update_comment_count = mysqli_query($connection, $query);
+
+                    } else {
+                        echo "<script>alert('Fields cannot be empty')</script>";
+                    }
+
+                   
                 }
 
 
