@@ -11,16 +11,40 @@
 
         <div class="row">
 
+
+
+
+
+              
+
+
+
+
+
             <!-- Blog Entries Column -->
-            <div class="col-md-8">
+               <div class="col-md-8">
 
                 <?php 
-                    $query = "SELECT * FROM posts ";
+
+                if (isset($_GET['a_id'])) {
+
+                $the_author = $_GET['a_id'];
+
+                }
+                ?>
+                    <h1 class="page-header">
+                        All Posts of
+                        <small><?php echo $the_author; ?></small>
+                    </h1>
+                <?php 
+
+                    $query = "SELECT * FROM posts WHERE post_author = '{$the_author}' ";
                     //$query .= "WHERE post_status = 'published' ";
 
-                    $select_all_posts_query = mysqli_query($connection, $query);
+                    $select_posts_query = mysqli_query($connection, $query);
+                    confirm($select_posts_query);
 
-                        while ($row = mysqli_fetch_assoc($select_all_posts_query)) {
+                        while ($row = mysqli_fetch_assoc($select_posts_query)) {
                             $post_id = $row['post_id'];
                             
                             $post_title = $row['post_title'];
@@ -47,7 +71,7 @@
                     <a href="post.php?p_id=<?php echo $post_id; ?>"><?php echo $post_title ?></a>
                 </h2>
                 <p class="lead">
-                    by <a href="author_posts.php?a_id=<?php echo $post_author; ?>&p_id=<?php echo $post_id; ?>"><?php echo $post_author; ?></a>
+                    by <!-- <a href="author_posts.php?a_id=<?php echo $post_author ?>"> --><?php echo $post_author ?><!-- </a> -->
                 </p>
                 <p><span class="glyphicon glyphicon-time"></span> <?php echo $post_date ?></p>
                 <hr>
@@ -70,6 +94,12 @@
                   
 
             </div>
+
+
+
+                
+
+
 
     <!-- Blog Sidebar Widgets Column -->
 <?php include 'includes/sidebar.php' ?>

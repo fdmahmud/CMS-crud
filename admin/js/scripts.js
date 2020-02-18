@@ -22,7 +22,7 @@ $(document).ready(function(){
 
 
 	
-	ClassicEditior
+	ClassicEditor
 		.create( document.querySelector( '#body' ))
 		.catch( error => {
 			console.error( error );

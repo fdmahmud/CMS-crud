@@ -129,7 +129,7 @@ $post_counts = ($post_counts-$post_counts)+1;
 				echo "<td>$post_comment_count</td>";
 				echo "<td>$post_date</td>";
 				echo "<td><a class='btn btn-primary' href='posts.php?source=edit_post&p_id={$post_id}'>Edit</a></td>";
-				echo "<td><a class='btn btn-danger' href='posts.php?delete={$post_id}'>Delete</a></td>";
+				echo "<td><a \"javascript: return confirm('Are you sure want ot delete'); \" class='btn btn-danger' href='posts.php?delete={$post_id}'>Delete</a></td>";
 				echo "</tr>";
 
 			}
