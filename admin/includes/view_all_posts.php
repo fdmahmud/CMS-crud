@@ -29,6 +29,41 @@
                $update_post_query = mysqli_query($connection, $query);
                confirm($update_post_query);
                          break;
+
+
+
+
+
+                    case 'clone':
+                         $query = "SELECT * FROM posts WHERE post_id = '{$checkBoxIdValue}'";
+                         $clone_post_query = mysqli_query($connection, $query);
+               while ($row = mysqli_fetch_assoc($clone_post_query)) {
+
+                         //$post_id = $row['post_id'];
+                         $post_author = $row['post_author'];
+                         $post_title = $row['post_title'];
+                         $post_category_id = $row['post_catagory_id'];
+                         $post_status = $row['post_status'];
+                         $post_image = $row['post_image'];
+                         $post_tags = $row['post_tags'];
+                         $post_comment_count = $row['post_comment_count'];
+                         $post_date = $row['post_date'];
+                         $post_content = $row['post_content'];
+
+                         $query = "INSERT INTO posts";
+$query .= "(post_catagory_id, post_title, post_author, post_date, post_image, post_content, post_tags, post_comment_count, post_status) " ;
+$query .= "VALUES({$post_category_id},'{$post_title}','{$post_author}','{$post_date}','{$post_image}','{$post_content}','{$post_tags}', 0 ,'{$post_status}') ";
+                    }
+
+                    $clone_post_query = mysqli_query($connection, $query);
+                    confirm($clone_post_query);
+                         break;
+
+
+
+
+
+
                     default:
                          # code...
                          break;
@@ -52,6 +87,7 @@
                     <option value="published">Publish</option>
                     <option value="draft">Draft</option>
                     <option value="delete">Delete</option>
+                    <option value="clone">Clone</option>
                </select>
           </div>
           <div class="col-xs-4"> 

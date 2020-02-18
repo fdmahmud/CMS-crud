@@ -84,7 +84,7 @@
 
                     <?php  
                     } else {
-                        //echo "<h1 class='text-center'>No post found</h1>";   
+                        //echo "<h1 class='text-center'>No post found</h1>";  
                         } 
                     }
                     ?>
