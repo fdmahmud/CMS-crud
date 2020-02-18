@@ -19,13 +19,21 @@
             if (isset($_GET['p_id'])) {
                 $the_post_id = $_GET['p_id'];
 
-            }
+                $view_query = "UPDATE posts SET post_views_count = post_views_count + 1 ";
+                $view_query .= "WHERE post_id = {$the_post_id} ";
 
-
+                $send_query = mysqli_query($connection, $view_query);
+                confirm($send_query);
 
                 $query = "SELECT * FROM posts WHERE post_id = {$the_post_id} ";
 
                 $select_all_posts_query = mysqli_query($connection, $query);
+
+
+
+                if (empty($select_all_posts_query)) { // This should be something else.
+                    header("Location: /index.php");
+                } else {
 
                     while ($row = mysqli_fetch_assoc($select_all_posts_query)) {
                         $post_title = $row['post_title'];
@@ -37,11 +45,11 @@
 
             ?>
 
-                <h1 class="page-header">
+                <!-- <h1 class="page-header">
                     Page Heading
                     <small>Secondary Text</small>
                 </h1>
-
+ -->
                 <!-- First Blog Post -->
                 <h2>
                     <a href="#"><?php echo $post_title ?></a>
@@ -58,8 +66,13 @@
 
                 <hr>       
 
-            <?php     
-                 }
+            <?php  
+                    }
+                } 
+            } else {
+                    header("Location: ../index.php");
+                }
+            
             ?>
 
 

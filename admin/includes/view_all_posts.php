@@ -109,7 +109,8 @@ $query .= "VALUES({$post_category_id},'{$post_title}','{$post_author}','{$post_d
      			<th>Status</th>
      			<th>Image</th>
      			<th>Tags</th>
-     			<th>Comments</th>
+                    <th>Comments</th>
+     			<th>Views</th>
                     <th>Date</th>
                     <th>Edit</th>
      			<th>Delete</th>
@@ -127,7 +128,7 @@ $query .= "VALUES({$post_category_id},'{$post_title}','{$post_author}','{$post_d
 	                    			<td>Tags</td>
 	                    			<td>Data</td>
 	                    			<td>Comments</td> -->
-
+               <?php resetView2(); ?>
                <?php deletePost(); ?>
 
 

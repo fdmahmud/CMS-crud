@@ -74,19 +74,20 @@ function insertCategories() {
 	function showAllPosts() {
 		global $connection;
 
-		$query = "SELECT * FROM posts";
+		$query = "SELECT * FROM posts ";
+        $query .= "ORDER BY post_id DESC";
+
 			$show_All_Posts = mysqli_query($connection, $query);
 
 			if (!$show_All_Posts) {
 				die("error" . mysqli_error($connection));
 			}
 
-$query = "SELECT * FROM posts ";
-$all_query = mysqli_query($connection, $query);
+		
 
-$post_counts = mysqli_num_rows($all_query);
+//$post_counts = mysqli_num_rows($show_All_Posts);
 
-$post_counts = ($post_counts-$post_counts)+1;
+$post_counts = 1;
 
 
 			while ($row = mysqli_fetch_assoc($show_All_Posts)) {
@@ -100,6 +101,7 @@ $post_counts = ($post_counts-$post_counts)+1;
 				$post_tags = $row['post_tags'];
 				$post_comment_count = $row['post_comment_count'];
 				$post_date = $row['post_date'];
+				$post_views_count = $row['post_views_count'];
 
 				echo "<tr>";
 				echo "<td><input class='checkBoxes' type='checkbox' name='checkBoxArray[]' value='{$post_id}'></td>";
@@ -127,6 +129,7 @@ $post_counts = ($post_counts-$post_counts)+1;
 				echo "<td><img width='90' src='../images/$post_image'></td>";
 				echo "<td>$post_tags</td>";
 				echo "<td>$post_comment_count</td>";
+				echo "<td><a href='posts.php?reset_id={$post_id}'>$post_views_count</a></td>";
 				echo "<td>$post_date</td>";
 				echo "<td><a class='btn btn-primary' href='posts.php?source=edit_post&p_id={$post_id}'>Edit</a></td>";
 				echo "<td><a \"javascript: return confirm('Are you sure want ot delete'); \" class='btn btn-danger' href='posts.php?delete={$post_id}'>Delete</a></td>";
@@ -553,6 +556,38 @@ function checkUserExist($username) {
 		return $m = "2";
 	}
 
+}
+
+function resetView() {
+	global $connection;
+	if (isset($_GET['p_id'])) {
+         $the_post_id =  $_GET['p_id'];
+     }
+	if (isset($_POST['reset_view'])) {
+
+
+
+		$query = "UPDATE posts ";
+		$query .= "SET post_views_count = 0 WHERE post_id = " . mysqli_real_escape_string($connection, $the_post_id) . " ";
+		$reset_view = mysqli_query($connection, $query);
+		confirm($reset_view);
+		echo "<h1>Done</h1>";
+	}
+}
+
+function resetView2() {
+	global $connection;
+	if (isset($_GET['reset_id'])) {
+
+        $the_reset_id =  $_GET['reset_id'];
+
+		$query = "UPDATE posts ";
+		$query .= "SET post_views_count = 0 WHERE post_id = " . mysqli_real_escape_string($connection, $the_reset_id) . " ";
+		$reset_view = mysqli_query($connection, $query);
+		confirm($reset_view);
+		echo "<h1>Done</h1>";
+		header("Location: posts.php");
+	}
 }
 
 // function imageName($imageName) {
