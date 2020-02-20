@@ -81,8 +81,19 @@
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
                         
+                        <?php 
+
+                        if (isset($_SESSION['username'])) {
+                       
+                        ?>
+
                         <img width="35" src="../images/<?php echo $_SESSION['user_image']; ?>"> 
-                        <?php echo $_SESSION['username']; ?> <b class="caret"></b></a>
+                        <?php echo $_SESSION['username']; }else { ?> <b class="caret"></b></a>
+                        <?php
+                         
+                            echo "<img width='35' src=' '>No user<";
+                        }
+                        ?>
                     <ul class="dropdown-menu">
                         <li>
                             <a href="../admin/profile.php"><i class="fa fa-fw fa-user"></i> Profile</a>

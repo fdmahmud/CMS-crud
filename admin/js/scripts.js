@@ -31,6 +31,20 @@ $('#load-screen').delay(400).fadeOut(300, function(){
 
 
 
+function loadUserOnline() {
+
+	$.get("function.php?userOnline=result", function(data){
+			$(".useronline").text(data);
+		});
+	}
+
+	setInterval(function(){
+		loadUserOnline();
+	},500);
+
+
+
+
 	
 	ClassicEditor
 		.create( document.querySelector( '#body' ))
