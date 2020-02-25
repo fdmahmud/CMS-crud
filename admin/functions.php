@@ -349,9 +349,25 @@ $post_counts = ($post_counts-$post_counts)+1;
 	function editUser() {
 		global $connection;
 
+
+
+$stupidCode = $_GET['u_id'];
+
+$query = "SELECT * FROM users";
+$checkQuery = mysqli_query($connection, $query);
+confirm($checkQuery);
+
+while ($row = mysqli_fetch_assoc($checkQuery)) {
+$userID = $row['user_id'];
+}
+	
+
+
 		if (isset($_GET['u_id'])) {
 			$the_user_id = $_GET['u_id'];
 		}
+
+
 		if (isset($_POST['edit_user'])) {
 	
 				$user_firstname = $_POST['user_firstname'];
@@ -371,28 +387,33 @@ $post_counts = ($post_counts-$post_counts)+1;
 				$select_image = mysqli_query($connection, $query);
 
 				while ($row = mysqli_fetch_array($select_image)) {
-					$user_image1 = $row['user_image'];
+					$user_image = $row['user_image'];
 				}
 
 			}
 
-						$query = "SELECT randSalt FROM users ";                       //Incription  password
-			            $select_randSalt_query = mysqli_query($connection, $query);
+$user_password = password_hash($user_password, PASSWORD_DEFAULT, ['cost'=> 10]);
 
-			            confirm($select_randSalt_query);
 
-			            $row = mysqli_fetch_assoc($select_randSalt_query); 
-			            $randSalt = $row['randSalt'];
 
-			            $hashed_password = crypt($user_password, $randSalt);
+
+						// $query = "SELECT randSalt FROM users ";                       //Incription  password
+			   //          $select_randSalt_query = mysqli_query($connection, $query);
+
+			   //          confirm($select_randSalt_query);
+
+			   //          $row = mysqli_fetch_assoc($select_randSalt_query); 
+			   //          $randSalt = $row['randSalt'];
+
+			   //          $hashed_password = crypt($user_password, $randSalt);
 
 			$query = "UPDATE users SET ";                          	//  ORGANIZE
 			$query .= "username = '{$username}', ";					// 	THIS QUERY
-			$query .= "password = '{$hashed_password}', ";			//	WIth VERY
+			$query .= "password = '{$user_password}', ";			//	WIth VERY
 			$query .= "user_firstname = '{$user_firstname}', ";		//	MUTCH
 			$query .= "user_lastname = '{$user_lastname}', ";		//	CAUTION!!!!!
 			$query .= "user_email = '{$user_email}', ";				//
-			$query .= "user_image = '{$user_image1}', ";			//	OR GET
+			$query .= "user_image = '{$user_image}', ";		  		//	OR GET
 			$query .= "user_role = '{$user_role}' " ;				//	READY TO
 			$query .= "WHERE user_id = {$the_user_id}";				//	SUFFER!!!
 
@@ -401,7 +422,9 @@ $post_counts = ($post_counts-$post_counts)+1;
 
 				confirm($create_user_query);
 				header("Location: users.php");
-	}
+	} //else {
+		//header("Location: index.php");
+	//}
 	}
 
 	function deleteUser() {
@@ -470,9 +493,9 @@ function logIn() {
 			$randSalt = $row['randSalt'];
 
 		}
-		$password = crypt($password, $db_user_password);
+		//$password = crypt($password, $db_user_password);
 
-		if ($username === $db_username && $password === $db_user_password) { // is identical
+		if ($username === $db_username && password_verify($password, $db_user_password)) { // is identical
 
 			$_SESSION['username'] = $db_username;
 			//$_SESSION['password'] = $db_user_password;

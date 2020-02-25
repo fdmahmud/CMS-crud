@@ -11,6 +11,8 @@
 				$user_password = $_POST['password'];
 				$user_role = $_POST['user_role'];
 				
+$user_password = password_hash($user_password, PASSWORD_DEFAULT, ['cost'=> 10]);
+
 
 				move_uploaded_file($user_image_temp, "../images/$user_image");
 
@@ -62,7 +64,7 @@
 	</div>
 	<div class="form-group">
 		<label for="title">Passowrd</label>
-		<input type="password" class="form-control" name="password">
+		<input type="password" autocomplete="off" class="form-control" name="password">
 	</div>
 	<div class="form-group">
 		<label for="title">Profile Image</label>

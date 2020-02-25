@@ -23,6 +23,9 @@
         $password = mysqli_real_escape_string($connection, $password);
 
 
+        $password = password_hash($password, PASSWORD_DEFAULT, ['cost'=> 10]);
+
+
 
         $query = "SELECT user_id FROM users WHERE username = '{$username}' ";
 
@@ -38,16 +41,6 @@
             } else {
 
 
-
-            $query = "SELECT randSalt FROM users ";
-            $select_randSalt_query = mysqli_query($connection, $query);
-
-                confirm($select_randSalt_query);
-
-            $row = mysqli_fetch_assoc($select_randSalt_query); 
-            $randSalt = $row['randSalt'];
-
-            $password = crypt($password, $randSalt);
 
             $query = "INSERT INTO users (username, user_email, password, user_role) ";
             $query .= "VALUES ('{$username}', '{$email}', '{$password}', 'subscriber')";

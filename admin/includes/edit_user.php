@@ -1,7 +1,6 @@
 
 <?php 
-
-
+	
 	if (isset($_GET['u_id'])) {
 		$the_user_id = $_GET['u_id'];
 		
@@ -24,10 +23,13 @@
 			$user_role = $row['user_role'];
 
 		}
+	editUser();
+
+	} else {
+		header("Location: ../admin/index.php");
 	}
 
 
-	editUser();
 
 
 					// $query = "SELECT randSalt FROM users ";                       //Incription  password
@@ -91,7 +93,7 @@
 	</div>
 	<div class="form-group">
 		<label for="title">Passowrd</label>
-		<input type="password" class="form-control" value="<?php echo $password; ?>" name="password">
+		<input type="password" class="form-control" autocomplete="off" name="password">
 	</div> 
 	<div class="form-group">
 		<label for="title">Profile Image</label>

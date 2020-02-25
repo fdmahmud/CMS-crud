@@ -88,12 +88,14 @@
                         ?>
 
                         <img width="35" src="../images/<?php echo $_SESSION['user_image']; ?>"> 
-                        <?php echo $_SESSION['username']; }else { ?> <b class="caret"></b></a>
+                        <?php echo $_SESSION['username']; }else { ?> <b class="caret"></b>
                         <?php
                          
-                            echo "<img width='35' src=' '>No user<";
+                            echo "<img width='35' src=' '><span>No user</span>";
                         }
                         ?>
+                    </a>
+                        
                     <ul class="dropdown-menu">
                         <li>
                             <a href="../admin/profile.php"><i class="fa fa-fw fa-user"></i> Profile</a>
