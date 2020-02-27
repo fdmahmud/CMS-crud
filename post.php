@@ -103,11 +103,13 @@
                         confirm($submitting_comment); // my method.
                         echo "Comment Submitted.";
 
+ 
 
-                        $query = "UPDATE posts SET post_comment_count = post_comment_count + 1 ";
-                        $query .= "WHERE post_id = '{$the_post_id}'";
 
-                        $update_comment_count = mysqli_query($connection, $query);
+                        // $query = "UPDATE posts SET post_comment_count = post_comment_count + 1 ";
+                        // $query .= "WHERE post_id = '{$the_post_id}'";
+
+                        // $update_comment_count = mysqli_query($connection, $query);
 
                     } else {
                         echo "<script>alert('Fields cannot be empty')</script>";
