@@ -1,8 +1,10 @@
 
 <?php 
+	 
+
 	if (isset($_POST['create_post'])) {
 	
-				$post_author = $_POST['post_author'];
+				$post_author = $_SESSION['username'];
 				$post_title = $_POST['title1'];
 				$post_category_id = $_POST['post_category'];
 				$post_status = $_POST['post_status'];
@@ -41,6 +43,7 @@
 
 </div>
 	<div class="form-group">
+		<label for="catagory">Catagories</label>
 	<select name="post_category" id="">
 		
 <?php 
@@ -63,10 +66,10 @@
 	</div>
 
 
-	<div class="form-group">
+<!-- 	<div class="form-group">
 		<label for="title">Post Author</label>
 		<input type="text" class="form-control" name="post_author">
-	</div>
+	</div> -->
 
 
 
@@ -95,7 +98,7 @@
 	</div>
 	<div class="form-group">
 		<label for="title">Post Content</label>
-		<textarea type="text" class="form-control" id="body" cols="30" rows="10" name="post_content"></textarea>
+		<textarea type="text" class="form-control" id="body" cols="100" rows="100" name="post_content"></textarea>
 	</div>
 	<div class="form-group">
 		

@@ -14,7 +14,7 @@
             <!-- Blog Entries Column -->
             <div class="col-md-8">
 
-                <?php 
+                <?php //// PAGINATION SYSTEM
                 $per_page = 4;
                 if (isset($_GET['page'])) {
                     $page = $_GET['page'];
@@ -39,7 +39,7 @@
                     confirm($find_count);
                    $count = mysqli_num_rows($find_count);
 
-                    echo $count = ceil(($count / $per_page) - 1);
+                    $count = ceil(($count / $per_page));
 
 
 

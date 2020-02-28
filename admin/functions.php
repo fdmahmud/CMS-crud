@@ -12,6 +12,15 @@ function confirm($result) {
 		
 	}
 
+
+
+function escape($string) { ////		Security function
+	global $connection;
+	return mysqli_real_escape_string($connection, trim($string));
+}
+
+
+
 function insertCategories() {
 
 	global $connection;
@@ -94,6 +103,7 @@ $post_counts = 1;
 
 				$post_id = $row['post_id'];
 				$post_author = $row['post_author'];
+				//$post_user = $row['post_user'];
 				$post_title = $row['post_title'];
 				$post_category_id = $row['post_catagory_id'];
 				$post_status = $row['post_status'];
@@ -108,7 +118,21 @@ $post_counts = 1;
 				echo "<td>{$post_counts}</td>";
 				$post_counts++;
 				echo "<td>{$post_id}</td>";
-				echo "<td>{$post_author}</td>";
+
+// if (isset($post_author) || !empty($post_author)) {
+// 				echo "<td>{$post_author}</td>";
+// } elseif(isset($post_user) || !empty($post_user)) {
+// 				echo "<td>{$post_user}</td>";
+
+// }
+
+
+
+
+
+
+
+
 				echo "<td><a href='../post.php?p_id={$post_id}'>{$post_title}</a></td>";
 
 					$query = "SELECT * FROM catagories WHERE cat_id = {$post_category_id} "; 
@@ -447,13 +471,19 @@ $user_password = password_hash($user_password, PASSWORD_DEFAULT, ['cost'=> 10]);
 
 			global $connection;
 
-			if (isset($_GET['delete'])) {
-	 
-	        	$the_delete_id = $_GET['delete'];            	
+			if (isset($_GET['delete']) && isset($_SESSION['user_role'])) {
+
+				if ($_SESSION['user_role'] == 'admin') {
+					
+				
+	        	$the_delete_id = mysqli_real_escape_string($connection, $_GET['delete']);   
+
 	            $query = "DELETE FROM users WHERE user_id = {$the_delete_id} ";
 	            $delete_user_query = mysqli_query($connection, $query);
 	            header("Location: users.php");
+				}
 			}
+	 
 		}
 		
 	function changeToAdmin() {
