@@ -7,7 +7,7 @@ function confirm($result) {
 	global $connection;
 
 	if (!$result) {
-			die(" Query Failed. " . mysqli_error($connection));
+			die("Ferdous, Your Query Fucked. " . mysqli_error($connection));
 		}
 		
 	}
@@ -120,16 +120,11 @@ $post_counts = 1;
 				echo "<td>{$post_id}</td>";
 
 // if (isset($post_author) || !empty($post_author)) {
-// 				echo "<td>{$post_author}</td>";
+				echo "<td>{$post_author}</td>";
 // } elseif(isset($post_user) || !empty($post_user)) {
 // 				echo "<td>{$post_user}</td>";
 
 // }
-
-
-
-
-
 
 
 
@@ -548,7 +543,7 @@ function logIn() {
 			$_SESSION['firstname'] = $db_user_firstname;
 			$_SESSION['lastname'] = $db_user_lastname;
 			$_SESSION['user_role'] = $db_user_role;
-			$_SESSION['user_role'] = $db_user_role;
+			//$_SESSION['user_role'] = $db_user_role;
 			$_SESSION['user_image'] = $db_user_image;
 
 			header("Location: ../admin");

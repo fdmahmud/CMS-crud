@@ -22,9 +22,10 @@
 
                 		while ($row = mysqli_fetch_assoc($select_all_catagories_query)) {
                 			$cat_title = $row['cat_title'];
+                            $cat_id = $row['cat_id'];
 
                 			//echo "<li>" . $cat_title . "</li>"; //Both works
-                			echo "<li><a href='#''>{$cat_title}</a></li>";
+                			echo "<li><a href='./category.php?category={$cat_id}'>{$cat_title}</a></li>";
                 		}
                 	?>
                     <?php 

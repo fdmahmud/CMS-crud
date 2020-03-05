@@ -16,8 +16,8 @@
 
             <?php 
 
-            if (isset($_GET['p_id'])) {
-                $the_post_id = $_GET['p_id'];
+    if (isset($_GET['p_id'])) {
+    $the_post_id = $_GET['p_id'];
 
                 $view_query = "UPDATE posts SET post_views_count = post_views_count + 1 ";
                 $view_query .= "WHERE post_id = {$the_post_id} ";
@@ -25,15 +25,29 @@
                 $send_query = mysqli_query($connection, $view_query);
                 confirm($send_query);
 
+
+            if (isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'admin') {
+
                 $query = "SELECT * FROM posts WHERE post_id = {$the_post_id} ";
+                
+            } else {
+
+                $query = "SELECT * FROM posts WHERE post_id = {$the_post_id} AND post_status = 'published' ";
+
+            }
+
 
                 $select_all_posts_query = mysqli_query($connection, $query);
+                confirm($select_all_posts_query);
 
+                if (mysqli_num_rows($select_all_posts_query) < 1) {
+                         echo "<h1 class='text-center'>No post found</h1>";
+                       
+                    } else {
 
-
-                if (empty($select_all_posts_query)) { // This should be something else.
-                    header("Location: /index.php");
-                } else {
+                // if (empty($select_all_posts_query)) { // This should be something else.
+                //     header("Location: /index.php");
+                // } else {
 
                     while ($row = mysqli_fetch_assoc($select_all_posts_query)) {
                         $post_title = $row['post_title'];
@@ -68,11 +82,8 @@
 
             <?php  
                     }
-                } 
-            } else {
-                    header("Location: ../index.php");
-                }
-            
+               
+          
             ?>
 
 
@@ -119,12 +130,6 @@
 
 
              ?>
-
-
-
-
-
-
 
 
                 <!-- Comments Form -->
@@ -190,8 +195,12 @@
                 </div>
 
         <?php 
-
-                    } 
+}
+                    }   
+                } else {
+                    header("Location: ./index.php");
+                }
+            
         ?>
 
 

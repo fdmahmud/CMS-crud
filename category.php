@@ -18,17 +18,45 @@
 
                 if (isset($_GET['category'])) {
                     $post_category_id = $_GET['category'];
+
+
+                $per_page = 4;
+                if (isset($_GET['page'])) {
+                    $page = $_GET['page'];
+                } else {
+                    $page = "";
                 }
 
 
 
+                if ($page == "" || $page == 1) {
+                    $page_1 = 0;
+                } else {
+                    $page_1 = ($page * $per_page) - $per_page;
+                }
 
 
+                if (isset($_SESSION['user_role']) && $_SESSION['user_role'] == 'admin') {
 
+                $query = "SELECT * FROM posts WHERE post_catagory_id = {$post_category_id} LIMIT {$page_1}, $per_page  ";
+                
+            } else {
 
-                    $query = "SELECT * FROM posts WHERE post_catagory_id = {$post_category_id}";
+                $query = "SELECT * FROM posts WHERE post_catagory_id = {$post_category_id} AND post_status = 'published' LIMIT {$page_1}, $per_page ";
+
+            }
+
+                   // $query = "SELECT * FROM posts WHERE post_catagory_id = {$post_category_id} AND post_status = 'published' ";
 
                     $select_all_posts_query = mysqli_query($connection, $query);
+$count = mysqli_num_rows($select_all_posts_query);
+
+                    if ($count < 1) {
+                         echo "<h1 class='text-center'>No post found</h1>";
+                       
+                    } else {
+
+$count = ceil(($count / $per_page));
 
                         while ($row = mysqli_fetch_assoc($select_all_posts_query)) {
                             $post_id = $row['post_id'];
@@ -41,10 +69,10 @@
 
                 ?>
 
-                            <h1 class="page-header">
+                          <!--   <h1 class="page-header">
                     Page Heading
                     <small>Secondary Text</small>
-                </h1>
+                </h1> -->
 
                 <!-- First Blog Post -->
                 <h2>
@@ -64,6 +92,11 @@
 
                     <?php     
                         }
+                    }
+                } else {
+
+                        header("Location: index.php");
+                    }
                     ?>
 
 
